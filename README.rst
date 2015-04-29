@@ -12,6 +12,10 @@ SYNOPSIS
 DESCRIPTION
     file2str simply reads a file and returns the contents as a null terminated
     string.
+    
+INSTALLATION
+    Use `clib <https://github.com/clibs/clib>`_ to install file2str into your project, eg:
+    λ clib install willemt/file2str
 
 LICENSE
     Public domain
