@@ -10,7 +10,6 @@ char *file2strl(
 {
     FILE *file;
 
-
     if (!(file = fopen(path, "rb")))
     {
         fprintf(stderr, "Unable to open file %s\n", path);
