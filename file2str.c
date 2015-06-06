@@ -19,19 +19,23 @@ char *file2strl(
     if (-1 == fseek(file, 0, SEEK_END))
     {
         fprintf(stderr, "Unable to seek file %s\n", path);
+        fclose(file);
         return NULL;
     }
 
     unsigned long file_len;
+    unsigned long bytes_read;
     if (-1 == (file_len = ftell(file)))
     {
         fprintf(stderr, "Unable to ftell() file %s\n", path);
+        fclose(file);
         return NULL;
     }
 
     if (-1 == fseek(file, 0, SEEK_SET))
     {
         fprintf(stderr, "Unable to seek file %s\n", path);
+        fclose(file);
         return NULL;
     }
 
@@ -43,7 +47,13 @@ char *file2strl(
         return NULL;
     }
 
-    fread(contents, file_len, 1, file);
+    bytes_read = fread(contents, file_len, 1, file);
+    if(bytes_read == 0 && ferror(file)) {
+        fprintf(stderr, "Read error");
+        free(contents);
+        fclose(file);
+        return NULL;   
+    }
     fclose(file);
 
     contents[file_len] = '\0';
@@ -61,4 +71,3 @@ char *file2str(
 {
     return file2strl(path,NULL);
 }
-
